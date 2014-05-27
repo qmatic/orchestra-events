@@ -18,11 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.qmatic.qp.core.common.QPEvent;
-import com.qmatic.qp.events.comet.EventService;
 
 /**
  * Message driven POJO as a Spring component.
- * Receives JMS messages from the Orchestra JMS public Topic and calls the {@link EventService} to publish them via cometD
+ * Receives JMS messages from the Orchestra JMS public Topic and calls the {@link EventService} to publish them
  * 
  * @author gavsmi
  *

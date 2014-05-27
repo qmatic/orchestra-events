@@ -1,10 +1,10 @@
-#orchestra-central-events-cometd#
+#orchestra-events#
 ##Description##
-A module for the [Qmatic](http://www.qmatic.com) Orchestra platform to publish events via [CometD](http://cometd.org)
+A module for the [Qmatic](http://www.qmatic.com) Orchestra platform to publish events.
 
-Listens to the Orchestra public event JMS Topic  
-Clients subscribe via CometD channels  
-Event payload data delivered as JSON
+* Listens to the Orchestra public event JMS Topic  
+* Supports client subscription via [CometD](http://cometd.org) channels  
+* Event payload data delivered as JSON
 
 ##Requirements##
 * Qmatic Orchestra 5.3 >
@@ -12,35 +12,13 @@ Event payload data delivered as JSON
 ##Building##
 * Clone repository
 * Run `gradlew clean build`
-* Copy `build/libs/qp-central-events-cometd-0.1.0.war` to Orchestra `/custdeploy` folder
+* Copy `build/libs/qp-events-x.x.x.war` to Orchestra `/custdeploy` folder
 
 ##Using##
-Subscribe to the CometD channels via the URL `/cometevents/cometd`
+###CometD###
+Subscribe to the CometD channels via the URL `/qpevents/cometd`
 
 Channel subscription is based on the syntax `/events/<event_name>/<branch_id>`  
-
-Event names:
-
-* VISIT_REMOVE  
-* VISIT_CREATE  
-* VISIT_CALL  
-* SERVICE_POINT_CLOSE  
-* RESET  
-* VISIT_CONFIRM  
-* VISIT_END  
-* VISIT_NOSHOW  
-* USER_SESSION_START  
-* USER_SESSION_END  
-* VISIT_NEXT  
-* USER_SERVICE_POINT_SESSION_START  
-* USER_SERVICE_POINT_SESSION_END  
-* SERVICE_POINT_OPEN  
-* USER_SERVICE_POINT_WORK_PROFILE_SET  
-* VISIT_TRANSFER_TO_QUEUE  
-* VISIT_TRANSFER_TO_SERVICE_POINT_POOL  
-* VISIT_TRANSFER_TO_USER_POOL  
-* VISIT_RECYCLE  
-* UNSUPPORTED  
 
 Wildcards are supported in CometD for event subscriptions:
 
@@ -48,5 +26,7 @@ Wildcards are supported in CometD for event subscriptions:
 	/events/*/1 - subscribe to all events for branch with id 1
 
 ##Example##
-An example exists at the URL `/cometevents` that subscribes to all events via the CometD JavaScript client
+An example exists at the URL `/qpevents` that subscribes to all events via the CometD JavaScript client
 and prints event JSON payloads to screen.
+
+For event payload documentation see the [wiki](https://github.com/qmatic/orchestra-central-events-cometd/wiki/Events)

@@ -10,6 +10,14 @@
 
    <context:component-scan base-package="com.qmatic.qp.events"/>
    
+   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+         <list>
+            <value>classpath:events.properties</value>
+         </list>
+      </property>
+   </bean>
+   
    <!-- JMS Topic Connection Factory -->
    <bean id="jndiJmsTopicConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">     
       <property name="jndiName" value="QPInternalConnectionFactory" />
@@ -17,15 +25,6 @@
       <property name="cache" value="true" />
       <property name="proxyInterface"  value="javax.jms.TopicConnectionFactory"/>
    </bean>
-     
-   <!--Spring JMS Topic Connection Factory--> 
-   <!--
-   <bean id="jmsTopicConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
-      <property name="targetConnectionFactory" ref="jndiJmsTopicConnectionFactory" />
-      <property name="cacheConsumers" value="true" />
-      <property name="cacheProducers" value="true" />
-   </bean>   	
-   -->
    
    <bean id="jmsTopicConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
       <property name="targetConnectionFactory" ref="jndiJmsTopicConnectionFactory" />
@@ -42,7 +41,5 @@
       <property name="messageListener" ref="eventListener" />
       <property name="errorHandler" ref="eventErrorHandler"/>
    </bean>
-   
-   <bean id="eventService" class="com.qmatic.qp.events.comet.EventService" />
    
 </beans>

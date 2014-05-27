@@ -4,8 +4,8 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 war {
-    baseName = 'qp-central-events-cometd'
-    version =  '0.1.0'
+    baseName = 'qp-events'
+    version =  '0.1.1'
 }
 
 repositories {

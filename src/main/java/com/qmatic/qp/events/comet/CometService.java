@@ -22,6 +22,7 @@ import org.cometd.bayeux.server.ServerChannel;
 import org.cometd.server.authorizer.GrantAuthorizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.qmatic.qp.core.common.QPEvent;
 
@@ -34,10 +35,10 @@ import com.qmatic.qp.core.common.QPEvent;
  */
 @Named
 @Singleton
-@Service("events")
-public class EventService {
+@Service("comet")
+public class CometService {
 
-	private static final Logger log = LoggerFactory.getLogger(EventService.class);
+	private static final Logger log = LoggerFactory.getLogger(CometService.class);
 	
 	private static final String CHANNEL_PREFIX = "/events/";
 	private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -47,6 +48,9 @@ public class EventService {
 	
 	@Session
 	private LocalSession session;
+	
+	@Value("${cometd.enabled}")
+	private boolean enabled = false;
 	
 	public void publishMessage(QPEvent event) throws Exception {
 		// create the dynamic channel id
@@ -75,5 +79,9 @@ public class EventService {
 		} else {
 			log.warn("Unable to create dynamic channel '{}'", channelId);
 		}
+	}
+	
+	public boolean isEnabled() {
+		return this.enabled;
 	}
 }
