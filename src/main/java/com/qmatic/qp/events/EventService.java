@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.qmatic.qp.core.common.QPEvent;
 import com.qmatic.qp.events.comet.CometService;
+import com.qmatic.qp.events.webhooks.WebhookService;
 
 /**
  * EventService, publishes event messages to enabled services.
@@ -30,11 +31,19 @@ public class EventService {
 	@Autowired
 	private CometService cometService;
 	
+	@Autowired
+	private WebhookService webhookService;
+	
 	public void publishMessage(QPEvent event) throws Exception {
 		// Publish message to each enabled service
 		if(cometService.isEnabled()) {
 			log.debug("Comet service enabled, publishing...");
 			cometService.publishMessage(event);
+		}
+		
+		if(webhookService.isEnabled()) {
+			log.debug("Webhook service enabled, publishing...");
+			webhookService.publishMessage(event);
 		}
 	}
 }
