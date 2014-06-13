@@ -21,7 +21,7 @@ import com.qmatic.qp.core.common.QPEvent;
 
 /**
  * Message driven POJO as a Spring component.
- * Receives JMS messages from the Orchestra JMS public Topic and calls the {@link EventService} to publish them
+ * Receives JMS messages from the Orchestra JMS public Topic and calls the {@link EventPublishService} to publish them
  * 
  * @author gavsmi
  *
@@ -32,7 +32,7 @@ public class EventListener implements MessageListener {
 	private static final Logger log = LoggerFactory.getLogger(EventListener.class);
 	
 	@Autowired
-	private EventService eventService;
+	private EventPublishService eventPublishService;
 	
 	@Override
 	public void onMessage(Message message) {
@@ -43,7 +43,7 @@ public class EventListener implements MessageListener {
 				
 				log.debug("Message recieved on qpPublicEventTopic topic. event name: {}", new Object[]{event.getEventName()});
 				
-				eventService.publishMessage(event);
+				eventPublishService.publishMessage(event);
 			} catch(Exception x) {
 				log.error("Error processing event on qpPublicEventTopic topic.", x);
 			}

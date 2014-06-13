@@ -22,9 +22,11 @@ import org.cometd.bayeux.server.ServerChannel;
 import org.cometd.server.authorizer.GrantAuthorizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.qmatic.qp.core.common.QPEvent;
+import com.qmatic.qp.events.EventService;
 
 /**
  * The cometD service, publishes event messages on dynamic channels
@@ -35,8 +37,9 @@ import com.qmatic.qp.core.common.QPEvent;
  */
 @Named
 @Singleton
-@Service("comet")
-public class CometService {
+@Service
+@Qualifier("comet")
+public class CometService implements EventService {
 
 	private static final Logger log = LoggerFactory.getLogger(CometService.class);
 	
@@ -52,6 +55,7 @@ public class CometService {
 	@Value("${cometd.enabled}")
 	private boolean enabled = false;
 	
+	@Override
 	public void publishMessage(QPEvent event) throws Exception {
 		// create the dynamic channel id
 		String channelId = CHANNEL_PREFIX + event.getEventName() + "/" + event.getParameter("branchId");
@@ -81,6 +85,7 @@ public class CometService {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled() {
 		return this.enabled;
 	}

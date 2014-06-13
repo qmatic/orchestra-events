@@ -17,11 +17,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.qmatic.qp.core.common.QPEvent;
+import com.qmatic.qp.events.EventService;
 
 /**
  * Webhook service, posts JSON event data to registered endpoints.
@@ -30,7 +31,8 @@ import com.qmatic.qp.core.common.QPEvent;
  *
  */
 @Service
-public class WebhookService {
+@Qualifier("webhook")
+public class WebhookService implements EventService {
 
 	private static final Logger log = LoggerFactory.getLogger(WebhookService.class);
 	private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -41,7 +43,7 @@ public class WebhookService {
 	@Value("${webhook.enabled}")
 	private boolean enabled = false;
 	
-	@Async
+	@Override
 	public void publishMessage(QPEvent event) throws Exception {
 		
 		// POST JSON to each registered endpoint
@@ -59,6 +61,7 @@ public class WebhookService {
 		}
 	}
 	
+	@Override
 	public boolean isEnabled() {
 		return this.enabled;
 	}

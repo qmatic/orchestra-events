@@ -11,11 +11,11 @@ package com.qmatic.qp.events;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.qmatic.qp.core.common.QPEvent;
-import com.qmatic.qp.events.comet.CometService;
-import com.qmatic.qp.events.webhooks.WebhookService;
 
 /**
  * EventService, publishes event messages to enabled services.
@@ -24,16 +24,19 @@ import com.qmatic.qp.events.webhooks.WebhookService;
  *
  */
 @Service
-public class EventService {
+public class EventPublishService {
 
-	private static final Logger log = LoggerFactory.getLogger(EventService.class);
+	private static final Logger log = LoggerFactory.getLogger(EventPublishService.class);
 			
 	@Autowired
-	private CometService cometService;
+	@Qualifier("comet")
+	private EventService cometService;
 	
 	@Autowired
-	private WebhookService webhookService;
+	@Qualifier("webhook")
+	private EventService webhookService;
 	
+	@Async
 	public void publishMessage(QPEvent event) throws Exception {
 		// Publish message to each enabled service
 		if(cometService.isEnabled()) {
