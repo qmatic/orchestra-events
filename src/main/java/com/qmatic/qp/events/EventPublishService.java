@@ -36,6 +36,10 @@ public class EventPublishService {
 	@Qualifier("webhook")
 	private EventService webhookService;
 	
+	@Autowired
+	@Qualifier("stathat")
+	private EventService statHatService;
+	
 	@Async
 	public void publishMessage(QPEvent event) throws Exception {
 		// Publish message to each enabled service
@@ -47,6 +51,11 @@ public class EventPublishService {
 		if(webhookService.isEnabled()) {
 			log.debug("Webhook service enabled, publishing...");
 			webhookService.publishMessage(event);
+		}
+		
+		if(statHatService.isEnabled()) {
+			log.debug("StatHat service enabled, publishing...");
+			statHatService.publishMessage(event);
 		}
 	}
 }
