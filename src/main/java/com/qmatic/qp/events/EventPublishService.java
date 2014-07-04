@@ -40,6 +40,10 @@ public class EventPublishService {
 	@Qualifier("stathat")
 	private EventService statHatService;
 	
+	@Autowired
+	@Qualifier("stat")
+	private EventService statService;
+	
 	@Async
 	public void publishMessage(QPEvent event) throws Exception {
 		// Publish message to each enabled service
@@ -56,6 +60,11 @@ public class EventPublishService {
 		if(statHatService.isEnabled()) {
 			log.debug("StatHat service enabled, publishing...");
 			statHatService.publishMessage(event);
+		}
+		
+		if(statService.isEnabled()) {
+			log.debug("Stat service enabled, publishing...");
+			statService.publishMessage(event);
 		}
 	}
 }
