@@ -56,32 +56,36 @@ public class CometService implements EventService {
 	private boolean enabled = false;
 	
 	@Override
-	public void publishMessage(QPEvent event) throws Exception {
+	public void publishMessage(QPEvent event) {
 		// create the dynamic channel id
 		String channelId = CHANNEL_PREFIX + event.getEventName() + "/" + event.getParameter("branchId");
 		
-		// create the dynamic channel
-		this.bayeuxServer.createIfAbsent(channelId, new ConfigurableServerChannel.Initializer() {
-
-			@Override
-			public void configureChannel(ConfigurableServerChannel channel) {
-				channel.addAuthorizer(GrantAuthorizer.GRANT_SUBSCRIBE);
-				channel.setPersistent(true);
-				channel.setLazy(true);
-			}
+		try {
+			// create the dynamic channel
+			this.bayeuxServer.createIfAbsent(channelId, new ConfigurableServerChannel.Initializer() {
+	
+				@Override
+				public void configureChannel(ConfigurableServerChannel channel) {
+					channel.addAuthorizer(GrantAuthorizer.GRANT_SUBSCRIBE);
+					channel.setPersistent(true);
+					channel.setLazy(true);
+				}
+				
+			});
 			
-		});
-		
-		ServerChannel channel = this.bayeuxServer.getChannel(channelId); 
-		
-		if(channel != null) {	
-			// publish to the dynamic channel
-			channel.publish(session, objectMapper.writeValueAsString(event), null);
-		
-			// remove the dynamic channel
-			channel.remove();
-		} else {
-			log.warn("Unable to create dynamic channel '{}'", channelId);
+			ServerChannel channel = this.bayeuxServer.getChannel(channelId); 
+			
+			if(channel != null) {	
+				// publish to the dynamic channel
+				channel.publish(session, objectMapper.writeValueAsString(event), null);
+			
+				// remove the dynamic channel
+				channel.remove();
+			} else {
+				log.warn("Unable to create dynamic channel '{}'", channelId);
+			}
+		} catch(Exception x) {
+			log.error("Error handling event.", x);
 		}
 	}
 	

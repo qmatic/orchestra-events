@@ -18,7 +18,7 @@ import com.qmatic.qp.core.common.QPEvent;
  */
 public interface EventService {
 
-	public void publishMessage(QPEvent event) throws Exception;
+	public void publishMessage(QPEvent event);
 	
 	public boolean isEnabled();
 }

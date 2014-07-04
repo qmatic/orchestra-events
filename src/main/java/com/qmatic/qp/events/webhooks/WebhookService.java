@@ -44,20 +44,24 @@ public class WebhookService implements EventService {
 	private boolean enabled = false;
 	
 	@Override
-	public void publishMessage(QPEvent event) throws Exception {
+	public void publishMessage(QPEvent event) {
 		
 		// POST JSON to each registered endpoint
 		for(String endpoint : webhookRegistry.all()) {
-			log.debug("POSTing event to {}", endpoint);
-			
-			HttpClient httpClient = HttpClientBuilder.create().build();
-			HttpPost post = new HttpPost(endpoint);
-			
-			post.setHeader("Content-Type", "application/json");
-			post.setEntity(new StringEntity(objectMapper.writeValueAsString(event), "UTF-8"));
-			
-			HttpResponse response = httpClient.execute(post);
-			log.debug("HTTP client response: {}", response.getStatusLine().getStatusCode());
+			try {
+				log.debug("POSTing event to {}", endpoint);
+				
+				HttpClient httpClient = HttpClientBuilder.create().build();
+				HttpPost post = new HttpPost(endpoint);
+				
+				post.setHeader("Content-Type", "application/json");
+				post.setEntity(new StringEntity(objectMapper.writeValueAsString(event), "UTF-8"));
+				
+				HttpResponse response = httpClient.execute(post);
+				log.debug("HTTP client response: {}", response.getStatusLine().getStatusCode());
+			} catch(Exception x) {
+				log.error("Error handling event.", x);
+			}
 		}
 	}
 	

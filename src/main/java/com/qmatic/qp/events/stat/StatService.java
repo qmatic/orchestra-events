@@ -47,7 +47,7 @@ public class StatService implements EventService {
 	private boolean enabled = false;
 	
 	@Override
-	public void publishMessage(QPEvent event) throws Exception {
+	public void publishMessage(QPEvent event) {
 		
 		log.debug("Handling event {}", event.getEventName());
 		
@@ -164,7 +164,6 @@ public class StatService implements EventService {
 			}
 		} catch(Exception x) {
 			log.error("Error handling event.", x);
-			throw new Exception(x);
 		}
 	}
 	
