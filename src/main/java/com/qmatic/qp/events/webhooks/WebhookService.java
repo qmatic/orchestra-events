@@ -9,10 +9,11 @@
 package com.qmatic.qp.events.webhooks;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,19 +46,36 @@ public class WebhookService implements EventService {
 	
 	@Override
 	public void publishMessage(QPEvent event) throws Exception {
-		
+			
 		// POST JSON to each registered endpoint
-		for(String endpoint : webhookRegistry.all()) {
+		for(final String endpoint : webhookRegistry.all()) {
 			log.debug("POSTing event to {}", endpoint);
 			
-			HttpClient httpClient = HttpClientBuilder.create().build();
-			HttpPost post = new HttpPost(endpoint);
+			CloseableHttpAsyncClient httpClient = HttpAsyncClients.createDefault();
+			httpClient.start();
 			
+			HttpPost post = new HttpPost(endpoint);
 			post.setHeader("Content-Type", "application/json");
 			post.setEntity(new StringEntity(objectMapper.writeValueAsString(event), "UTF-8"));
 			
-			HttpResponse response = httpClient.execute(post);
-			log.debug("HTTP client response: {}", response.getStatusLine().getStatusCode());
+			httpClient.execute(post, new FutureCallback<HttpResponse>() {
+				
+				@Override
+				public void failed(Exception ex) {
+					log.warn("Request for endpoint {} failed, removing endpoint", endpoint);
+					webhookRegistry.remove(endpoint);
+				}
+				
+				@Override
+				public void completed(HttpResponse result) {
+					log.debug("Request for endpoint {} completed", endpoint);
+				}
+				
+				@Override
+				public void cancelled() {
+					log.debug("Request for endpoint {} cancelled", endpoint);
+				}
+			});
 		}
 	}
 	
