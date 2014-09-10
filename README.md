@@ -53,6 +53,15 @@ Edit `events.properties` to enable StatHat support and specify our API key:
 
 See [StatHatService.java](src/main/java/com/qmatic/qp/events/stathat/StatHatService.java) to configure what gets sent to StatHat.
 
+###Persistence
+Optionally events can be persisted to the Orchestra stat database.
+
+Edit `events.properties` to enable stat persistence
+
+	stat.enabled = true
+
+Creates two tables in stat DB to store event data, `visit_events` and `sp_events`
+
 ##Example
 An example exists at the URL `/qpevents` that subscribes to all events via the CometD JavaScript client
 and prints event JSON payloads to screen.
