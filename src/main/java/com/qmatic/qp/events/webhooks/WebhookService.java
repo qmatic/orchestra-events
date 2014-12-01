@@ -45,37 +45,41 @@ public class WebhookService implements EventService {
 	private boolean enabled = false;
 	
 	@Override
-	public void publishMessage(QPEvent event) throws Exception {
+	public void publishMessage(QPEvent event) {
 			
 		// POST JSON to each registered endpoint
 		for(final String endpoint : webhookRegistry.all()) {
 			log.debug("POSTing event to {}", endpoint);
 			
-			CloseableHttpAsyncClient httpClient = HttpAsyncClients.createDefault();
-			httpClient.start();
-			
-			HttpPost post = new HttpPost(endpoint);
-			post.setHeader("Content-Type", "application/json");
-			post.setEntity(new StringEntity(objectMapper.writeValueAsString(event), "UTF-8"));
-			
-			httpClient.execute(post, new FutureCallback<HttpResponse>() {
+			try {
+				CloseableHttpAsyncClient httpClient = HttpAsyncClients.createDefault();
+				httpClient.start();
 				
-				@Override
-				public void failed(Exception ex) {
-					log.warn("Request for endpoint {} failed, removing endpoint", endpoint);
-					webhookRegistry.remove(endpoint);
-				}
+				HttpPost post = new HttpPost(endpoint);
+				post.setHeader("Content-Type", "application/json");
+				post.setEntity(new StringEntity(objectMapper.writeValueAsString(event), "UTF-8"));
 				
-				@Override
-				public void completed(HttpResponse result) {
-					log.debug("Request for endpoint {} completed", endpoint);
-				}
-				
-				@Override
-				public void cancelled() {
-					log.debug("Request for endpoint {} cancelled", endpoint);
-				}
-			});
+				httpClient.execute(post, new FutureCallback<HttpResponse>() {
+					
+					@Override
+					public void failed(Exception ex) {
+						log.warn("Request for endpoint {} failed, removing endpoint", endpoint);
+						webhookRegistry.remove(endpoint);
+					}
+					
+					@Override
+					public void completed(HttpResponse result) {
+						log.debug("Request for endpoint {} completed", endpoint);
+					}
+					
+					@Override
+					public void cancelled() {
+						log.debug("Request for endpoint {} cancelled", endpoint);
+					}
+				});
+			} catch(Exception x) {
+				log.error("Error handling event.", x);
+			}
 		}
 	}
 	
