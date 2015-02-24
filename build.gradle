@@ -5,7 +5,7 @@ apply plugin: 'idea'
 
 war {
     baseName = 'qp-events'
-    version =  '0.2.0'
+    version =  '0.2.1'
 }
 
 repositories {
@@ -30,9 +30,9 @@ dependencies {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 	
-	compile "org.hibernate:hibernate-core:4.1.9.Final"
-	compile "org.hibernate:hibernate-entitymanager:4.1.9.Final"
-	compile "org.hibernate:hibernate-ehcache:4.1.9.Final"
+	compile "org.hibernate:hibernate-core:4.2.7.SP1"
+	compile "org.hibernate:hibernate-entitymanager:4.2.7.SP1"
+	compile "org.hibernate:hibernate-ehcache:4.2.7.SP1"
 	
 	compile "joda-time:joda-time:2.1"
 	
