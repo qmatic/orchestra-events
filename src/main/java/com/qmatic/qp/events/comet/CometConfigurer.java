@@ -50,7 +50,7 @@ public class CometConfigurer implements DestructionAwareBeanPostProcessor, Servl
     }
     
     public Object postProcessBeforeInitialization(Object bean, String name) throws BeansException {
-    	log.info("Configuring service {}", name);
+    	log.debug("Configuring service {}", name);
     	
     	processor.processDependencies(bean);
     	processor.processConfigurations(bean);
