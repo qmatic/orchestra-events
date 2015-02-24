@@ -59,7 +59,7 @@ dependencies {
 	
 	providedCompile "org.slf4j:slf4j-api:1.6.6"
 	
-	compile files('lib/common-api.jar')
+	compile files('lib/qp-common-api-2.4.0.192.jar')
 	compile files('lib/unicodesqlserverdialect.jar')
 	
 	testCompile "junit:junit:4.10"
