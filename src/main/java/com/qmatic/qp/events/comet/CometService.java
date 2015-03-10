@@ -77,10 +77,11 @@ public class CometService implements EventService {
 			
 			if(channel != null) {	
 				// publish to the dynamic channel
-				channel.publish(session, objectMapper.writeValueAsString(event), null);
+				channel.publish(this.session, objectMapper.writeValueAsString(event));
 			
-				// remove the dynamic channel
-				channel.remove();
+				// set the channel to non-persistent after publishing so the sweeper can clean up if
+				// nobody is listening
+				channel.setPersistent(false);
 			} else {
 				log.warn("Unable to create dynamic channel '{}'", channelId);
 			}
