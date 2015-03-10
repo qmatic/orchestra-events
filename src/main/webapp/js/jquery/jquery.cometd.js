@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 the original author or authors.
+ * Copyright (c) 2008-2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-(function($)
+(function()
 {
     function bind($, org_cometd)
     {
@@ -51,13 +50,11 @@
                     type: 'POST',
                     contentType: 'application/json;charset=UTF-8',
                     data: packet.body,
-                    xhrFields: {
-                        // Has no effect if the request is not cross domain
-                        // but if it is, allows cookies to be sent to the server
-                        withCredentials: true
-                    },
                     beforeSend: function(xhr)
                     {
+                        // Has no effect if the request is not cross domain
+                        // but if it is, allows cookies to be sent to the server.
+                        xhr.withCredentials = true;
                         _setHeaders(xhr, packet.headers);
                         // Returning false will abort the XHR send
                         return true;
@@ -134,6 +131,6 @@
     }
     else
     {
-        bind($, org.cometd);
+        bind(jQuery, org.cometd);
     }
-})(jQuery);
+})();

@@ -5,25 +5,24 @@ $(function () {
 	var status = $('#status');
 	var cometd = $.cometd;
 	
-	cometd.registerTransport('websocket', new org.cometd.WebSocketTransport());
-	cometd.registerTransport('long-polling', new org.cometd.LongPollingTransport());
-	cometd.registerTransport('callback-polling', new org.cometd.CallbackPollingTransport());
+  // websocket not supported
+	cometd.unregisterTransport('websocket');
 	
 	var r = document.location.href.match(/^(.*)\//);
 	console.log(r[1]);
-	cometd.init(r[1] + '/cometd');
 	
-	cometd.addListener('/meta/handshake', function(handshake) {
-		if (handshake.successful === true ) {
-			cometd.batch(function () {
-				status.html($('<p>', {text: 'connected!'}));
-				startSubscription();
-			});
-		}
-	});
-	
-	cometd.handshake();
-	
+  cometd.configure({
+    url: r[1] + '/cometd',
+    logLevel: 'warn'
+  });
+  
+  cometd.handshake(function(reply) {
+    if(reply.successful) {
+			status.html($('<p>', {text: 'connected!'}));
+			startSubscription();
+    }
+  });
+  
 	function startSubscription() {
 		cometd.subscribe('/events/**', function(msg) {
 			console.log('Received message: ', msg);

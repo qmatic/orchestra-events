@@ -62,8 +62,8 @@ public class CometService implements EventService {
 		
 		try {
 			// create the dynamic channel
-			this.bayeuxServer.createIfAbsent(channelId, new ConfigurableServerChannel.Initializer() {
-	
+			this.bayeuxServer.createChannelIfAbsent(channelId, new ConfigurableServerChannel.Initializer() {
+
 				@Override
 				public void configureChannel(ConfigurableServerChannel channel) {
 					channel.addAuthorizer(GrantAuthorizer.GRANT_SUBSCRIBE);

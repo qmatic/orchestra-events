@@ -16,6 +16,8 @@ import javax.servlet.ServletContext;
 import org.cometd.annotation.ServerAnnotationProcessor;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.server.BayeuxServerImpl;
+import org.cometd.server.transport.JSONPTransport;
+import org.cometd.server.transport.JSONTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -70,6 +72,11 @@ public class CometConfigurer implements DestructionAwareBeanPostProcessor, Servl
     public BayeuxServer bayeuxServer() {
     	BayeuxServerImpl bean = new BayeuxServerImpl();
         bean.setOption(BayeuxServerImpl.LOG_LEVEL, "1");
+        bean.setOption("timeout", 60000);
+        
+        bean.addTransport(new JSONTransport(bean));
+        bean.addTransport(new JSONPTransport(bean));
+       
         return bean;
     }
     
