@@ -6,7 +6,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events.stat;
+package com.qmatic.qp.events.services.stat;
 
 import java.sql.Timestamp;
 
@@ -20,10 +20,12 @@ import org.springframework.stereotype.Service;
 import com.qmatic.qp.api.event.PublicEvents;
 import com.qmatic.qp.api.util.TimeUtil;
 import com.qmatic.qp.core.common.QPEvent;
-import com.qmatic.qp.events.EventService;
-import com.qmatic.qp.events.stat.model.EventId;
-import com.qmatic.qp.events.stat.model.ServicePointEvent;
-import com.qmatic.qp.events.stat.model.VisitEvent;
+import com.qmatic.qp.events.jpa.ServicePointEventDao;
+import com.qmatic.qp.events.jpa.VisitEventDao;
+import com.qmatic.qp.events.jpa.model.EventId;
+import com.qmatic.qp.events.jpa.model.ServicePointEvent;
+import com.qmatic.qp.events.jpa.model.VisitEvent;
+import com.qmatic.qp.events.services.EventService;
 
 /**
  * StatService persists events to stat database.

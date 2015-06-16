@@ -6,19 +6,25 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events;
+package com.qmatic.qp.events.jms;
 
-import com.qmatic.qp.core.common.QPEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ErrorHandler;
 
 /**
- * EventService interface.
+ * JMS error handler
+ * Logs errors encountered in processing JMS messages
  * 
  * @author gavsmi
  *
  */
-public interface EventService {
+public class EventErrorHandler implements ErrorHandler {
 
-	public void publishMessage(QPEvent event);
+	private static final Logger log = LoggerFactory.getLogger(EventErrorHandler.class);
 	
-	public boolean isEnabled();
+	@Override
+	public void handleError(Throwable t) {
+		log.error("Error in EventHandler.", t);
+	}
 }

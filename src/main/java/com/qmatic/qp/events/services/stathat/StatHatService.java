@@ -6,7 +6,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events.stathat;
+package com.qmatic.qp.events.services.stathat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.qmatic.qp.api.event.PublicEvents;
 import com.qmatic.qp.core.common.QPEvent;
-import com.qmatic.qp.events.EventService;
+import com.qmatic.qp.events.services.EventService;
 
 @Service
 @Qualifier("stathat")

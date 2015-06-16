@@ -6,7 +6,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events.comet;
+package com.qmatic.qp.events.services.comet;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,10 +23,9 @@ import org.cometd.server.authorizer.GrantAuthorizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.qmatic.qp.core.common.QPEvent;
-import com.qmatic.qp.events.EventService;
+import com.qmatic.qp.events.services.EventService;
 
 /**
  * The cometD service, publishes event messages on dynamic channels
@@ -51,9 +50,6 @@ public class CometService implements EventService {
 	
 	@Session
 	private LocalSession session;
-	
-	@Value("${cometd.enabled}")
-	private boolean enabled = false;
 	
 	@Override
 	public void publishMessage(QPEvent event) {
@@ -92,6 +88,6 @@ public class CometService implements EventService {
 	
 	@Override
 	public boolean isEnabled() {
-		return this.enabled;
+		return (boolean) this.bayeuxServer.getOption("enabled");
 	}
 }

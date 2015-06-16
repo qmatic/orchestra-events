@@ -6,7 +6,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events.webhooks;
+package com.qmatic.qp.events.services.webhook;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.qmatic.qp.core.common.QPEvent;
-import com.qmatic.qp.events.EventService;
+import com.qmatic.qp.events.services.EventService;
 
 /**
  * Webhook service, posts JSON event data to registered endpoints.

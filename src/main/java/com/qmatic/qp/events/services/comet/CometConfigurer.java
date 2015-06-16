@@ -6,7 +6,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events.comet;
+package com.qmatic.qp.events.services.comet;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -21,6 +21,7 @@ import org.cometd.server.transport.JSONTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -40,6 +41,9 @@ public class CometConfigurer implements DestructionAwareBeanPostProcessor, Servl
 	
 	private BayeuxServer bayeuxServer;
     private ServerAnnotationProcessor processor;
+    
+    @Value("${cometd.enabled}")
+	private boolean enabled = false;
     
     @Inject
     public void setBayeuxServer(BayeuxServer bayeuxServer) {
@@ -73,6 +77,7 @@ public class CometConfigurer implements DestructionAwareBeanPostProcessor, Servl
     	BayeuxServerImpl bean = new BayeuxServerImpl();
         bean.setOption(BayeuxServerImpl.LOG_LEVEL, "1");
         bean.setOption("timeout", 60000);
+        bean.setOption("enabled", enabled);
         
         bean.addTransport(new JSONTransport(bean));
         bean.addTransport(new JSONPTransport(bean));

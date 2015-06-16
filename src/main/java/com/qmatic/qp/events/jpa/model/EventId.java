@@ -1,4 +1,4 @@
-package com.qmatic.qp.events.stat.model;
+package com.qmatic.qp.events.jpa.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

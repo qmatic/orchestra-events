@@ -1,10 +1,11 @@
-package com.qmatic.qp.events.stat.model;
+package com.qmatic.qp.events.jpa.model;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "visit_events")
