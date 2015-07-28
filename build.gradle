@@ -29,6 +29,7 @@ dependencies {
 	compile "org.springframework:spring-web:$springVersion"
 	compile "org.springframework:spring-webmvc:$springVersion"
 	compile "org.springframework:spring-jms:$springVersion"
+	compile "org.springframework:spring-websocket:${springVersion}"
 	
 	compile ("org.springframework.data:spring-data-jpa:1.8.0.RELEASE") {
 		exclude group: "org.slf4j", module: "slf4j-api"
@@ -44,6 +45,8 @@ dependencies {
 	compile "joda-time:joda-time:2.1"
 	
 	compile "cglib:cglib:3.1"
+	
+	compile "javax.websocket:javax.websocket-api:1.0"
 	
 	compile "org.cometd.java:bayeux-api:2.9.1"
 	compile ("org.cometd.java:cometd-java-annotations:2.9.1") {

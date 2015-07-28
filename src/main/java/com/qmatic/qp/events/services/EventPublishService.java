@@ -44,6 +44,10 @@ public class EventPublishService {
 	@Qualifier("stat")
 	private EventService statService;
 	
+	@Autowired
+	@Qualifier("ws")
+	private EventService websocketService;
+	
 	@Async
 	public void publishMessage(QPEvent event) throws Exception {
 		// Publish message to each enabled service
@@ -65,6 +69,11 @@ public class EventPublishService {
 		if(statService.isEnabled()) {
 			log.debug("Stat service enabled, publishing...");
 			statService.publishMessage(event);
+		}
+		
+		if(websocketService.isEnabled()) {
+			log.debug("Websocket service enabled, publishing...");
+			websocketService.publishMessage(event);
 		}
 	}
 }
