@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.cometd.annotation.Service;
 import org.cometd.annotation.Session;
+import org.cometd.bayeux.MarkedReference;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.ConfigurableServerChannel;
 import org.cometd.bayeux.server.LocalSession;
@@ -62,26 +63,24 @@ public class CometService implements EventService {
 		
 		try {
 			// create the dynamic channel
-			this.bayeuxServer.createChannelIfAbsent(channelId, new ConfigurableServerChannel.Initializer() {
+			MarkedReference<ServerChannel> ref = this.bayeuxServer.createChannelIfAbsent(channelId, new ConfigurableServerChannel.Initializer() {
 
 				@Override
 				public void configureChannel(ConfigurableServerChannel channel) {
 					channel.addAuthorizer(GrantAuthorizer.GRANT_SUBSCRIBE);
-					channel.setPersistent(true);
-					channel.setLazy(true);
+					// set the channel to non-persistent after publishing so the sweeper can clean up if
+					// nobody is listening
+					channel.setPersistent(false);
+					channel.setLazy(false);
 				}
 				
 			});
 			
-			ServerChannel channel = this.bayeuxServer.getChannel(channelId); 
+			ServerChannel channel = ref.getReference();
 			
 			if(channel != null) {	
 				// publish to the dynamic channel
 				channel.publish(this.session, objectMapper.writeValueAsString(event));
-			
-				// set the channel to non-persistent after publishing so the sweeper can clean up if
-				// nobody is listening
-				channel.setPersistent(false);
 			} else {
 				log.warn("Unable to create dynamic channel '{}'", channelId);
 			}

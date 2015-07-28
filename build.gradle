@@ -5,8 +5,11 @@ apply plugin: 'idea'
 
 war {
     baseName = 'qp-events'
-    version =  '0.2.2'
+    version =  '0.2.3'
 }
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     mavenCentral()
