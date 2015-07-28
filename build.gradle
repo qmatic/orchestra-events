@@ -12,8 +12,11 @@ ext {
 
 war {
     baseName = 'qp-events'
-    version =  '1.0.1'
+	version =  '1.0.1'
 }
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     mavenCentral()
