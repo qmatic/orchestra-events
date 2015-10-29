@@ -51,23 +51,9 @@ dependencies {
 	
 	compile "javax.websocket:javax.websocket-api:1.0"
 	
-	compile "org.cometd.java:bayeux-api:2.9.1"
-	compile ("org.cometd.java:cometd-java-annotations:2.9.1") {
-		exclude group: "org.slf4j", module: "slf4j-api"
-	}
-	compile ("org.cometd.java:cometd-java-common:2.9.1") {
-		exclude group: "org.slf4j", module: "slf4j-api"
-	}
-	compile ("org.cometd.java:cometd-java-server:2.9.1") {
-		exclude group: "org.slf4j", module: "slf4j-api"
-	}
-	
 	compile "org.codehaus.jackson:jackson-mapper-asl:1.9.8"
 	
 	compile "org.apache.httpcomponents:httpasyncclient:4.0.1"
-	
-	compile "org.eclipse.jetty:jetty-servlets:9.0.3.v20130506"
-	compile "org.eclipse.jetty:jetty-util-ajax:9.0.3.v20130506"
 	
 	providedCompile "javax.jms:javax.jms-api:2.0-b12"
 	

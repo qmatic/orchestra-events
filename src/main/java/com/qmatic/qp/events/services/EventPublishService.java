@@ -27,10 +27,6 @@ import com.qmatic.qp.core.common.QPEvent;
 public class EventPublishService {
 
 	private static final Logger log = LoggerFactory.getLogger(EventPublishService.class);
-			
-	@Autowired
-	@Qualifier("comet")
-	private EventService cometService;
 	
 	@Autowired
 	@Qualifier("webhook")
@@ -51,10 +47,6 @@ public class EventPublishService {
 	@Async
 	public void publishMessage(QPEvent event) throws Exception {
 		// Publish message to each enabled service
-		if(cometService.isEnabled()) {
-			log.debug("Comet service enabled, publishing...");
-			cometService.publishMessage(event);
-		}
 		
 		if(webhookService.isEnabled()) {
 			log.debug("Webhook service enabled, publishing...");

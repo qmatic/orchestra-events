@@ -8,16 +8,10 @@
  */
 package com.qmatic.qp.events;
 
-import java.util.EnumSet;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import org.cometd.server.CometdServlet;
-import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -37,15 +31,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(ApplicationConfig.class, AsyncConfig.class, JmsConfig.class, JpaConfig.class, WebMvcConfig.class, WebSocketConfig.class);
 		ctx.setServletContext(container);
-		
-		container.setInitParameter("org.eclipse.jetty.server.context.ManagedAttributes", "org.cometd.bayeux");
-		
-		ServletRegistration.Dynamic cometd = container.addServlet("cometd", new CometdServlet());
-		cometd.addMapping("/cometd/*");
-		
-		FilterRegistration.Dynamic crossOrigin = container.addFilter("cross-origin", new CrossOriginFilter());
-		crossOrigin.setAsyncSupported(true);
-		crossOrigin.addMappingForServletNames(EnumSet.of (DispatcherType.REQUEST), true, "cometd");
 		
 		ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(ctx));
 		dispatcher.setLoadOnStartup(1);
