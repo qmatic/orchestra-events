@@ -29,6 +29,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/events")
+			.setAllowedOrigins("*")
 			.withSockJS()
 			.setStreamBytesLimit(512 * 1024)
 			.setHttpMessageCacheSize(1000)
