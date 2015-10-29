@@ -33,10 +33,6 @@ public class EventPublishService {
 	private EventService webhookService;
 	
 	@Autowired
-	@Qualifier("stathat")
-	private EventService statHatService;
-	
-	@Autowired
 	@Qualifier("ws")
 	private EventService websocketService;
 	
@@ -47,11 +43,6 @@ public class EventPublishService {
 		if(webhookService.isEnabled()) {
 			log.debug("Webhook service enabled, publishing...");
 			webhookService.publishMessage(event);
-		}
-		
-		if(statHatService.isEnabled()) {
-			log.debug("StatHat service enabled, publishing...");
-			statHatService.publishMessage(event);
 		}
 		
 		if(websocketService.isEnabled()) {
