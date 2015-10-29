@@ -6,7 +6,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events.webhooks.web;
+package com.qmatic.qp.events.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.qmatic.qp.events.webhooks.WebhookRegistry;
+import com.qmatic.qp.events.services.webhook.WebhookRegistry;
 
 /**
  * MVC controller, handles registration / deregistration of web hook endpoints.
@@ -25,7 +25,7 @@ import com.qmatic.qp.events.webhooks.WebhookRegistry;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/hooks")
 public class WebhookController {
 
 	@Autowired

@@ -6,18 +6,16 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE 
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.qmatic.qp.events;
-
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
+package com.qmatic.qp.events.jms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import com.qmatic.qp.core.common.QPEvent;
+import com.qmatic.qp.events.services.EventPublishService;
 
 /**
  * Message driven POJO as a Spring component.
@@ -27,26 +25,21 @@ import com.qmatic.qp.core.common.QPEvent;
  *
  */
 @Component
-public class EventListener implements MessageListener {
+public class EventListener {
 
 	private static final Logger log = LoggerFactory.getLogger(EventListener.class);
 	
 	@Autowired
 	private EventPublishService eventPublishService;
 	
-	@Override
-	public void onMessage(Message message) {
-		if(message instanceof ObjectMessage) {
-			try {
-				ObjectMessage msg = (ObjectMessage) message;
-				QPEvent event = (QPEvent) msg.getObject();
-				
-				log.debug("Message recieved on qpPublicEventTopic topic. event name: {}", new Object[]{event.getEventName()});
-				
-				eventPublishService.publishMessage(event);
-			} catch(Exception x) {
-				log.error("Error processing event on qpPublicEventTopic topic.", x);
-			}
+	@JmsListener(destination = "topic/qpPublicEventTopic")
+	public void onMessage(QPEvent event) {
+		log.debug("Event recieved on qpPublicEventTopic topic: {}", event.toString());
+		
+		try {
+			eventPublishService.publishMessage(event);
+		} catch(Exception x) {
+			log.error("Error processing event on qpPublicEventTopic topic.", x);
 		}
 	}
 	
