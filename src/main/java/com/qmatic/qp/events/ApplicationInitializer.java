@@ -19,7 +19,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 import com.qmatic.qp.events.config.ApplicationConfig;
 import com.qmatic.qp.events.config.AsyncConfig;
 import com.qmatic.qp.events.config.JmsConfig;
-import com.qmatic.qp.events.config.JpaConfig;
 import com.qmatic.qp.events.config.WebMvcConfig;
 import com.qmatic.qp.events.config.WebSocketConfig;
 
@@ -29,7 +28,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) throws ServletException {
 		
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(ApplicationConfig.class, AsyncConfig.class, JmsConfig.class, JpaConfig.class, WebMvcConfig.class, WebSocketConfig.class);
+		ctx.register(ApplicationConfig.class, AsyncConfig.class, JmsConfig.class, WebMvcConfig.class, WebSocketConfig.class);
 		ctx.setServletContext(container);
 		
 		ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(ctx));
