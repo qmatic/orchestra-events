@@ -39,9 +39,11 @@ public class WebsocketService implements EventService {
 	
 	@Override
 	public void publishMessage(QPEvent event) {
-		log.debug("Sending event on websocket!");
+		String destination = String.format("/topic/event/%s/%s", event.getEventName(), event.getParameter("branchId"));
 		
-		template.convertAndSend("/topic/event", event);
+		log.debug("Sending event on websocket to destination: {}", destination);
+		
+		template.convertAndSend(destination, event);
 	}
 	
 	@Override
