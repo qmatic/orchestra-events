@@ -34,10 +34,6 @@ dependencies {
 	compile "org.springframework:spring-jms:$springVersion"
 	compile "org.springframework:spring-websocket:${springVersion}"
 	
-	compile "joda-time:joda-time:2.1"
-	
-	compile "cglib:cglib:3.1"
-	
 	compile "javax.websocket:javax.websocket-api:1.0"
 	
 	compile "org.codehaus.jackson:jackson-mapper-asl:1.9.8"

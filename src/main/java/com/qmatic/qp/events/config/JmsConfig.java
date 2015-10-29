@@ -13,6 +13,7 @@ import javax.jms.TopicConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.support.destination.DestinationResolver;
@@ -23,6 +24,7 @@ import org.springframework.util.ErrorHandler;
 import com.qmatic.qp.events.jms.EventErrorHandler;
 
 @Configuration
+@EnableJms
 @ComponentScan(basePackages = "com.qmatic.qp.events.jms")
 public class JmsConfig {
 

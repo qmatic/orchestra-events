@@ -8,7 +8,7 @@
  */
 package com.qmatic.qp.events.config;
 
-//import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
@@ -17,7 +17,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
 @EnableWebSocketMessageBroker
-//@ComponentScan(basePackages = "com.qmatic.qp.events.websocket")
+@ComponentScan(basePackages = "com.qmatic.qp.events.services.ws")
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override

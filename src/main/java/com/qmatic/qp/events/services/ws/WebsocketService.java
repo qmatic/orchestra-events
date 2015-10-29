@@ -39,7 +39,7 @@ public class WebsocketService implements EventService {
 	
 	@Override
 	public void publishMessage(QPEvent event) {
-		log.info("Sending event on websocket!");
+		log.debug("Sending event on websocket!");
 		
 		template.convertAndSend("/topic/event", event);
 	}

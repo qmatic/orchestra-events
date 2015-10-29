@@ -25,7 +25,7 @@ import com.qmatic.qp.events.services.webhook.WebhookRegistry;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/hooks")
 public class WebhookController {
 
 	@Autowired
