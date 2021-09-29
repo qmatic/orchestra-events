@@ -170,6 +170,8 @@ public class QPEvent implements Event {
         sb.append(this.eventTime != null ? this.eventTime : "null");
         sb.append("\", \"uid\":\"");
         sb.append(this.unitId != null ? this.unitId : "null");
+        sb.append("\", \"parameters\":\"");
+        sb.append(this.parameters != null ? this.parameters : "null");
         sb.append("\" }");
         return sb.toString();
     }

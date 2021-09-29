@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <exclude-subsystems>
+            <subsystem name="logging" />
+        </exclude-subsystems>
+        <dependencies>
+            <module name="qmatic-conf"/>
+            <module name="ch.qos.logback"/>
+            <module name="qmatic-aaa-lib"/>
+            <module name="qmatic-api-lib"/>
+            <module name="org.jboss.resteasy.resteasy-jaxrs" />
+            <module name="org.apache.activemq.artemis"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
