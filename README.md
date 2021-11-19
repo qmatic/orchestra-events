@@ -1,4 +1,8 @@
 #orchestra-events
+
+++++++++++++++++ This project is no longer supported ++++++++++++++++
+
+
 ##Description
 A module for the [Qmatic](http://www.qmatic.com) Orchestra platform to publish events.
 
