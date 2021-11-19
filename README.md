@@ -8,7 +8,7 @@ A module for the [Qmatic](http://www.qmatic.com) Orchestra platform to publish e
 * Event payload data delivered as JSON
 
 ##Requirements
-* Qmatic Orchestra 6 >
+* Qmatic Orchestra 6.0
 
 ##Building
 * Clone repository
